@@ -1,32 +1,49 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from "vscode";
+/**
+ * VSCode Task View Extension
+ * 
+ * This extension provides a visual task manager in the VS Code sidebar,
+ * allowing users to view, organize, and execute tasks from a webview interface.
+ */
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log(
-        'Congratulations, your extension "vscode-task-view" is now active!'
-    );
+import * as vscode from 'vscode';
+import { TaskViewProvider } from './taskViewProvider';
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with registerCommand
-    // The commandId parameter must match the command field in package.json
-    const disposable = vscode.commands.registerCommand(
-        "vscode-task-view.helloWorld",
-        () => {
-            // The code you place here will be executed every time your command is executed
-            // Display a message box to the user
-            vscode.window.showInformationMessage(
-                "Hello World from VSCode Task View!"
-            );
-        }
-    );
+/**
+ * Extension activation function
+ * Called when the extension is first activated
+ * 
+ * @param context - VS Code extension context
+ */
+export function activate(context: vscode.ExtensionContext): void {
+    try {
+        // Create the task view provider
+        const provider = new TaskViewProvider(context.extensionUri);
 
-    context.subscriptions.push(disposable);
+        // Register the webview view provider
+        const disposable = vscode.window.registerWebviewViewProvider(
+            TaskViewProvider.viewType, 
+            provider,
+            {
+                webviewOptions: {
+                    retainContextWhenHidden: true
+                }
+            }
+        );
+
+        // Add to subscriptions for proper cleanup
+        context.subscriptions.push(disposable);
+
+        console.log('VSCode Task View extension activated successfully');
+    } catch (error) {
+        console.error('Failed to activate VSCode Task View extension:', error);
+        vscode.window.showErrorMessage('Failed to activate Task View extension');
+    }
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+/**
+ * Extension deactivation function
+ * Called when the extension is deactivated
+ */
+export function deactivate(): void {
+    console.log('VSCode Task View extension deactivated');
+}
