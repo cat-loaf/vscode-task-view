@@ -1,41 +1,126 @@
 {
-  "name": "vscode-task-view",
-  "displayName": "VSCode Task View",
-  "description": "View your tasks in a visual manager",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.104.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [],
-  "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "vscode-task-view.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src",
-    "test": "vscode-test"
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.104.0",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "22.x",
-    "@typescript-eslint/eslint-plugin": "^8.42.0",
-    "@typescript-eslint/parser": "^8.42.0",
-    "eslint": "^9.34.0",
-    "typescript": "^5.9.2",
-    "@vscode/test-cli": "^0.0.11",
-    "@vscode/test-electron": "^2.5.2"
-  }
+    "name": "vscode-task-view",
+    "displayName": "VSCode Task View",
+    "description": "Organize and manage VS Code tasks by source/provider in the activity bar",
+    "version": "1.0.0",
+    "publisher": "GranthJ",
+    "author": {
+        "name": "Granth J"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cat-loaf/vscode-task-view.git"
+    },
+    "homepage": "https://github.com/cat-loaf/vscode-task-view#readme",
+    "bugs": {
+        "url": "https://github.com/cat-loaf/vscode-task-view/issues"
+    },
+    "keywords": [
+        "tasks",
+        "task runner",
+        "npm scripts",
+        "build tasks",
+        "task management",
+        "activity bar",
+        "organization",
+        "productivity"
+    ],
+    "engines": {
+        "vscode": "^1.104.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "galleryBanner": {
+        "color": "#1e1e1e",
+        "theme": "dark"
+    },
+    "icon": "resources/icon.png",
+    "activationEvents": [],
+    "main": "./out/extension.js",
+    "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "taskViewContainer",
+                    "title": "Tasks",
+                    "icon": "$(list-tree)"
+                }
+            ]
+        },
+        "views": {
+            "taskViewContainer": [
+                {
+                    "type": "webview",
+                    "id": "taskView",
+                    "name": "",
+                    "icon": "$(list-tree)"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "Task View",
+            "properties": {
+                "taskView.showTooltips": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable or disable all tooltips in the Task View panel. When disabled, no hover tooltips will appear for tasks, groups, or subgroups."
+                },
+                "taskView.showGroupTooltips": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show detailed information tooltips when hovering over task groups. Displays group metadata like task count, types, and task names. Only applies when 'Show Tooltips' is enabled."
+                },
+                "taskView.showSubgroupTooltips": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show detailed information tooltips when hovering over task subgroups. Displays subgroup metadata like parent source, task count, and task names. Only applies when 'Show Tooltips' is enabled."
+                },
+                "taskView.requireGroupConfirmation": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show a confirmation dialog before executing all tasks in a workspace group (e.g., 'build', 'test'). Helps prevent accidentally running multiple tasks. Hold Shift while clicking to bypass this confirmation."
+                },
+                "taskView.requireSubgroupConfirmation": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show a confirmation dialog before executing all tasks in a subgroup or source group (e.g., npm tasks, gulp tasks). Helps prevent accidentally running multiple tasks from the same provider. Hold Shift while clicking to bypass this confirmation."
+                },
+                "taskView.showTaskCounts": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Display the number of tasks in parentheses next to group and subgroup names (e.g., 'build (3)'). When disabled, only single-task groups will hide their count to reduce visual clutter."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "vscode-test",
+        "package": "vsce package",
+        "publish": "vsce publish",
+        "clean": "rimraf out *.vsix"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.104.0",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "22.x",
+        "@typescript-eslint/eslint-plugin": "^8.42.0",
+        "@typescript-eslint/parser": "^8.42.0",
+        "eslint": "^9.34.0",
+        "typescript": "^5.9.2",
+        "@vscode/test-cli": "^0.0.11",
+        "@vscode/test-electron": "^2.5.2",
+        "@vscode/vsce": "^3.2.1",
+        "rimraf": "^6.0.1"
+    },
+    "prettier": {
+        "useTabs": false,
+        "tabWidth": 4
+    }
 }

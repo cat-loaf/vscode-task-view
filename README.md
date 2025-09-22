@@ -1,71 +1,86 @@
-# vscode-task-view README
+# VSCode Task View
 
-This is the README for your extension "vscode-task-view". After writing up a brief description, we recommend including the following sections.
+A VS Code extension that displays workspace tasks in a tree view within the activity bar sidebar. Tasks are organized by source and type with options for execution and configuration.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### Task Organization
+- Tasks are grouped hierarchically by source (workspace, npm, CMake, etc.)
+- Sub-grouping by task type (build, test, etc.) within each source
+- Visual status indicators show task execution state (running/idle)
 
-For example if there is an image subfolder under your extension project workspace:
+### Task Execution
+- Run or stop individual tasks using action buttons
+- Execute all tasks in a group or subgroup
+- Optional confirmation dialogs for bulk operations
+- Hold `Shift` while clicking to skip confirmations
 
-\!\[feature X\]\(images/feature-x.png\)
+### Information Display
+- Hover tooltips show task details including command, provider, and type information
+- Group tooltips display task counts and member information
+- Command line details for shell tasks
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+### Configuration Options
+- Control tooltip visibility globally or by category
+- Configure confirmation dialog behavior
+- Toggle display of task counts
+- Compatible with VS Code's built-in task system
 
-## Requirements
+## Installation
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+Install from the VS Code Extensions view (`Ctrl+Shift+X` / `Cmd+Shift+X`) by searching for "VSCode Task View".
 
-## Extension Settings
+Alternatively, install manually by downloading the `.vsix` file from [Releases](https://github.com/cat-loaf/vscode-task-view/releases) and using the `Extensions: Install from VSIX...` command.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Usage
 
-For example:
+The Task View panel appears in the Activity Bar (left sidebar). Tasks are displayed in a tree structure organized by source and type.
 
-This extension contributes the following settings:
+- Click the run button to execute individual tasks
+- Click the stop button to terminate running tasks
+- Click the run button next to a group to execute all tasks in that group
+- Hold `Shift` while clicking group run buttons to skip confirmation dialogs
+- Hover over tasks and groups to see detailed information (if tooltips are enabled)
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Configuration
+
+Settings are available under "Task View" in VS Code's settings (`File → Preferences → Settings`):
+
+- `taskView.showTooltips` (boolean, default: true) - Enable/disable all tooltips
+- `taskView.showGroupTooltips` (boolean, default: true) - Show tooltips for task groups
+- `taskView.showSubgroupTooltips` (boolean, default: true) - Show tooltips for task subgroups  
+- `taskView.requireGroupConfirmation` (boolean, default: true) - Confirm before running workspace groups
+- `taskView.requireSubgroupConfirmation` (boolean, default: true) - Confirm before running provider groups
+- `taskView.showTaskCounts` (boolean, default: true) - Display task counts next to group names
+
+## Supported Task Types
+
+Works with all VS Code task providers:
+
+- Workspace tasks (defined in `.vscode/tasks.json`)
+- npm scripts (from package.json)
+- CMake build tasks
+- Shell commands
+- Process executables
+- Any other task provider supported by VS Code
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- Task exit codes are not accessible through VS Code's Task API, so success/failure status cannot be reliably determined
+- Some task providers may not expose full command information for tooltips
 
-## Release Notes
+## Contributing
 
-Users appreciate release notes as you update your extension.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, code style guidelines, and contribution process.
 
-### 1.0.0
+## License
 
-Initial release of ...
+MIT License - see [LICENSE](LICENSE) file for details.
 
-### 1.0.1
+## Changelog
 
-Fixed issue #.
+See [CHANGELOG.md](CHANGELOG.md) for version history.
 
-### 1.1.0
+## Issues and Support
 
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Report bugs and request features on [GitHub Issues](https://github.com/cat-loaf/vscode-task-view/issues).
